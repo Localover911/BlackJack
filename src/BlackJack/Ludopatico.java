@@ -1,7 +1,9 @@
-public class Dealer {
+package BlackJack;
+
+public class Ludopatico extends Thread {
     private final String nome;
 
-    public Dealer(String nome ) {
+    public Ludopatico(String nome ) {
         this.nome = nome;
     }
 
@@ -13,5 +15,8 @@ public class Dealer {
     public String getNome() {
         return nome;
     }
-}
 
+
+
+
+}

@@ -1,11 +1,12 @@
-public class Ludopatico extends Thread {
+package BlackJack;
+
+public class Dealer {
     private final String nome;
 
-    public Ludopatico(String nome ) {
+    public Dealer(String nome ) {
         this.nome = nome;
     }
 
-    @Override
     public void run() {
 
     }
@@ -14,3 +15,4 @@ public class Ludopatico extends Thread {
         return nome;
     }
 }
+
