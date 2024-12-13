@@ -1,18 +1,25 @@
 package BlackJack;
 
-public class Dealer {
-    private final String nome;
+import java.util.ArrayList;
 
-    public Dealer(String nome ) {
-        this.nome = nome;
+public class Dealer extends Ludopatico{
+    private int indice;
+
+    public Dealer(String nome) {
+        super(nome);
     }
 
     public void run() {
 
     }
 
-    public String getNome() {
-        return nome;
+    public void estraiCarta(Ludopatico x, Mazzo m){
+         x.setMano(getMano() + m.getValoreCarta(indice));
+         System.out.println(m.toString(indice));
+         this.indice ++;
     }
+    public void controllaVittoria(Ludopatico x){
+    }
+
 }
 
