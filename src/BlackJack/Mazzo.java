@@ -40,4 +40,7 @@ public class Mazzo {
     public int getValoreCarta(int i){
         return this.mazzo[i].getValore();
     }
+    public Carta [] getMazzo(){
+        return this.mazzo;
+    }
 }
