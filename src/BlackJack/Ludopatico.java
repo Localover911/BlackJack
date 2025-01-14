@@ -31,20 +31,11 @@ public class Ludopatico extends Thread {
     public void setVincente(boolean Vincente){
         this.vincente = vincente;
     }
-    public boolean voglioCarta(){
-        if (this.vincente){
+    public boolean controllaMano(){
             if (this.mano < 16){
                 return true;
             }
             return false;
         }
-        return false;
-    }
-    public boolean controllaVittoria(){
-        if (this.vincente){
-            return true;
-        }
-        return false;
-    }
 
 }
