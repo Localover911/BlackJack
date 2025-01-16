@@ -38,4 +38,12 @@ public class Ludopatico extends Thread {
             return false;
         }
 
+    public String cartaoStai (boolean carta, int i){
+        if (carta){
+            return this.getNome() + ": ha chiesto carta";
+
+        }else{
+            return this.getNome() + ": decide di stare";
+        }
+    }
 }
