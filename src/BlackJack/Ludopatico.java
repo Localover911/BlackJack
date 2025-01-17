@@ -5,7 +5,7 @@ public class Ludopatico extends Thread {
     private int mano;
     private boolean vincente;
 
-    public Ludopatico(String nome ) {
+    public Ludopatico(String nome) {
         this.nome = nome;
         this.mano = 0;
         this.vincente=true;
@@ -28,7 +28,7 @@ public class Ludopatico extends Thread {
     public boolean getVincente(){
         return this.vincente;
     }
-    public void setVincente(boolean Vincente){
+    public void setVincente(boolean vincente){
         this.vincente = vincente;
     }
     public boolean controllaMano(){

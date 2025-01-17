@@ -37,7 +37,7 @@ public class Dealer extends Ludopatico{
                 try {
                     this.aggiungiGiocatore();
                     postidisponibili.acquire();
-                    TimeUnit.SECONDS.sleep(2);
+                    TimeUnit.SECONDS.sleep(1);
                 } catch (Exception e) {
                     System.out.print(e);
                 }
@@ -79,7 +79,7 @@ public class Dealer extends Ludopatico{
                         System.out.println(e);
                     }
                 }
-                else{
+                else if (tavolo.get(i).getMano() > 21){
                     try {
                         tavolo.get(i).setVincente(false);
                         System.out.println(tavolo.get(i).getNome() + " ha sforato: " + tavolo.get(i).getMano());
@@ -111,26 +111,27 @@ public class Dealer extends Ludopatico{
 
             //controllo vittoria
             for (int i = 0; i < tavolo.size(); i++) {
-                if(this.getVincente() && !tavolo.get(i).getVincente()){
-                    try {
-                        System.out.println(tavolo.get(i).getNome() + ": ha perso e abbandonato la partita");
-                        tavolo.remove(i);
-                        i--;
-                        postidisponibili.release();
-                        TimeUnit.SECONDS.sleep(3);
-                    } catch (Exception e) {
-                        System.out.println(e);
-                    }
-                }
-                else if (this.getVincente() && tavolo.get(i).getVincente()) {
-                    if (tavolo.get(i).getMano() > this.getMano()) {
-                        try {
-                            System.out.println(tavolo.get(i).getNome() + ": ha vinto");
-                            TimeUnit.SECONDS.sleep(3);
-                        } catch (Exception e) {
-                            System.out.println(e);
+                if (this.getVincente()) {
+                    if(tavolo.get(i).getVincente()) {
+                        if (tavolo.get(i).getMano() > this.getMano()) {
+                            try {
+                                System.out.println(tavolo.get(i).getNome() + ": ha vinto");
+                                TimeUnit.SECONDS.sleep(3);
+                            } catch (Exception e) {
+                                System.out.println(e);
+                            }
+                        } else {
+                            try {
+                                System.out.println(tavolo.get(i).getNome() + ": ha perso e abbandonato la partita");
+                                tavolo.remove(i);
+                                i--;
+                                postidisponibili.release();
+                                TimeUnit.SECONDS.sleep(3);
+                            } catch (Exception e) {
+                                System.out.println(e);
+                            }
                         }
-                    } else {
+                    }else if(!tavolo.get(i).getVincente()){
                         try {
                             System.out.println(tavolo.get(i).getNome() + ": ha perso e abbandonato la partita");
                             tavolo.remove(i);
