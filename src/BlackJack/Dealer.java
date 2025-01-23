@@ -59,18 +59,22 @@ public class Dealer extends Ludopatico{
                     }
                 }
             }
-            // pesca carte
-            for (int i = 0; i < tavolo.size(); i++) {
-                while (tavolo.get(i).controllaMano()) {
-                    try {
-                        System.out.println(tavolo.get(i).cartaoStai(tavolo.get(i).controllaMano(), i));
-                        TimeUnit.SECONDS.sleep(2);
-                        this.estraiCarta(mazzo, i);
-                        TimeUnit.SECONDS.sleep(2);
-                    }catch (Exception e) {
-                        System.out.println(e);
-                    }
 
+            //pesca carte aggiornato
+            for(int i = 0; i < tavolo.size(); i++){
+                while(tavolo.get(i).controllaMano()){
+                    synchronized (tavolo.get(i)){
+                        tavolo.get(i).aspettaCarta();
+                        System.out.println(tavolo.get(i).cartaoStai(tavolo.get(i).controllaMano(), i));
+                        try {
+                            TimeUnit.SECONDS.sleep(2);
+                            this.estraiCarta(mazzo, i);
+                            TimeUnit.SECONDS.sleep(2);
+                        }catch (Exception e) {
+                            System.out.println(e);
+                        }
+
+                    }
                 }if(tavolo.get(i).getMano() <= 21){
                     try{
                         System.out.println(tavolo.get(i).cartaoStai(tavolo.get(i).controllaMano(), i));
@@ -89,6 +93,7 @@ public class Dealer extends Ludopatico{
                     }
                 }
             }
+
             // pesca carte banco
             while (this.controllaMano()) {
                 try{
@@ -172,10 +177,10 @@ public class Dealer extends Ludopatico{
 
     }
 
-    public void estraiCarta(Mazzo m, int i){
-         tavolo.get(i).setMano(tavolo.get(i).getMano() + m.getValoreCarta(indice));
-         System.out.println(tavolo.get(i).getNome() + " ha pescato: " + m.toString(indice) + " -" +" la sua mano: " + tavolo.get(i).getMano());
-         indice ++;
+    public synchronized void estraiCarta(Mazzo m, int i){
+        tavolo.get(i).setMano(tavolo.get(i).getMano() + m.getValoreCarta(indice));
+        System.out.println(tavolo.get(i).getNome() + " ha pescato: " + m.toString(indice) + " -" +" la sua mano: " + tavolo.get(i).getMano());
+        indice ++;
     }
     public void estraiCarta(Mazzo m){
         this.setMano(this.getMano() + m.getValoreCarta(indice));
@@ -192,6 +197,4 @@ public class Dealer extends Ludopatico{
         l.start();
 
     }
-
 }
-

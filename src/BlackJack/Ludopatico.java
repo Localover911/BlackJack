@@ -1,9 +1,12 @@
 package BlackJack;
 
+import java.util.concurrent.TimeUnit;
+
 public class Ludopatico extends Thread {
     private final String nome;
     private int mano;
     private boolean vincente;
+    private boolean haRichiestoCarta = false;
 
     public Ludopatico(String nome) {
         this.nome = nome;
@@ -13,6 +16,14 @@ public class Ludopatico extends Thread {
 
 
     public void run() {
+        while(controllaMano()){
+            try{
+                TimeUnit.SECONDS.sleep(1);
+            }catch (Exception e) {
+                System.out.println(e);
+            }
+            richiediCarta();
+        }
 
     }
 
@@ -31,12 +42,25 @@ public class Ludopatico extends Thread {
     public void setVincente(boolean vincente){
         this.vincente = vincente;
     }
-    public boolean controllaMano(){
-            if (this.mano < 16){
-                return true;
-            }
-            return false;
+    public synchronized boolean controllaMano(){
+        if (this.mano < 16){
+            return true;
         }
+        return false;
+    }
+    public synchronized void richiediCarta(){
+        haRichiestoCarta = true;
+        notify();
+    }
+    public synchronized void aspettaCarta(){
+        while(!haRichiestoCarta){
+            try{
+                wait();
+            }catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }
 
     public String cartaoStai (boolean carta, int i){
         if (carta){
